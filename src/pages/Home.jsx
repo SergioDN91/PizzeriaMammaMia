@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import Header from './Header';
-import CardPizza from './CardPizza';
+import Header from '../components/Header';
+import CardPizza from '../components/CardPizza';
 
 const Home = () => {
   const [pizzas, setPizzas] = useState([]);
 
- 
   const getPizzas = async () => {
     try {
       const response = await fetch('http://localhost:5000/api/pizzas');
@@ -28,6 +27,7 @@ const Home = () => {
           {pizzas.map((pizza) => (
             <div className="col-12 col-md-4" key={pizza.id}>
               <CardPizza
+                id={pizza.id} 
                 name={pizza.name}
                 price={pizza.price}
                 ingredients={pizza.ingredients}

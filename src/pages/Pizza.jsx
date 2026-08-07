@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { formatTotal } from '../utils/formatUtils';
-import imgNapolitana from '../assets/img/napolitana.jpg';
+import { formatTotal } from '../utils/formatUtils'; // <-- Cambió de ./utils a ../utils
+import imgNapolitana from '../assets/img/napolitana.jpg'; // <-- Ajustado si importas imágenes
 
 const Pizza = () => {
+  // ... resto del código ...
   const [pizza, setPizza] = useState(null);
 
   const getPizza = async () => {

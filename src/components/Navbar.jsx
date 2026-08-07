@@ -1,44 +1,40 @@
+import { Link } from 'react-router-dom';
 import { formatTotal } from '../utils/formatUtils';
 
 const Navbar = () => {
   const total = 25000;
-  const token = false;
+  const token = false; 
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark text-white bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <div className="container">
-        <a className="navbar-brand" href="#">Pizzería Mamma Mia!</a>
-        
-        <div className="collapse navbar-collapse d-flex justify-content-between">
-          <ul className="navbar-nav mb-2 mb-lg-0 d-flex gap-2">
-            <li className="nav-item">
-              <button className="btn btn-outline-light">🍕 Home</button>
-            </li>
+        <Link className="navbar-brand me-4" to="/">Pizzería Mamma Mia!</Link>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <div className="navbar-nav me-auto mb-2 mb-lg-0 d-flex gap-2">
+            <Link to="/" className="btn btn-outline-light btn-sm">🍕 Home</Link>
             
             {token ? (
               <>
-                <li className="nav-item">
-                  <button className="btn btn-outline-light">🔓 Profile</button>
-                </li>
-                <li className="nav-item">
-                  <button className="btn btn-outline-light">🔒 Logout</button>
-                </li>
+                <Link to="/profile" className="btn btn-outline-light btn-sm">🔓 Profile</Link>
+                <button className="btn btn-outline-light btn-sm">🔒 Logout</button>
               </>
             ) : (
               <>
-                <li className="nav-item">
-                  <button className="btn btn-outline-light">🔐 Login</button>
-                </li>
-                <li className="nav-item">
-                  <button className="btn btn-outline-light">🔐 Register</button>
-                </li>
+                <Link to="/login" className="btn btn-outline-light btn-sm">🔐 Login</Link>
+                <Link to="/register" className="btn btn-outline-light btn-sm">🔐 Register</Link>
               </>
             )}
-          </ul>
-          
-          <button className="btn btn-outline-info">
-            🛒 Total: ${formatTotal(total)}
-          </button>
+          </div>
+
+          <div className="d-flex">
+            <Link to="/cart" className="btn btn-outline-info btn-sm fw-bold">
+              🛒 Total: ${formatTotal(total)}
+            </Link>
+          </div>
         </div>
       </div>
     </nav>

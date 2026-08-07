@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { pizzaCart as initialCart } from '../data/pizzas'; 
-import { formatTotal } from '../utils/formatUtils';
+// IMPORTANTE: Asegúrate de importar la variable con el nombre que usas abajo
+import { pizzaCart as initialCart } from '../data/pizzas'; // <-- Ajustado
+import { formatTotal } from '../utils/formatUtils';           // <-- Ajustado
 
 const Cart = () => {
+  // ... resto del código ...
   
   const [cart, setCart] = useState(initialCart);
 
