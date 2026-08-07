@@ -1,9 +1,6 @@
-// 1. Importamos tus imágenes locales (ajusta las rutas si cambiaste los nombres)
 import imgNapolitana from '../assets/img/napolitana.jpg';
 import imgEspanola from '../assets/img/española.jpg';
-import imgPepperoni from '../assets/img/pepperoni.jpg'; // La usamos para el Salame y el resto si no tienes más fotos
-
-// 2. El catálogo completo para el Home
+import imgPepperoni from '../assets/img/pepperoni.jpg';
 export const pizzas = [
   {
     id: "P001",
@@ -26,7 +23,7 @@ export const pizzas = [
     name: "salame",
     price: 5990,
     ingredients: ["mozzarella", "tomates", "salame", "orégano"],
-    img: imgPepperoni, // Usa la foto local de Pepperoni que le queda perfecto al Salame
+    img: imgPepperoni,
     desc: "La pizza es una preparación culinaria que consiste en un pan plano, habitualmente de forma circular, elaborado con harina de trigo, levadura, agua y sal."
   },
   {
@@ -55,7 +52,7 @@ export const pizzas = [
   }
 ];
 
-// 3. Simulación del carrito de compras inicial
+
 export const pizzaCart = [
   {
     id: "P001",
