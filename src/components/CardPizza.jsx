@@ -1,7 +1,6 @@
+import { Link } from 'react-router-dom'; 
 import { useCart } from '../context/CartContext';
 import { formatTotal } from '../utils/formatUtils';
-
-// Importa tus imágenes locales
 import imgNapolitana from '../assets/img/napolitana.jpg';
 import imgEspanola from '../assets/img/española.jpg';
 import imgPepperoni from '../assets/img/pepperoni.jpg';
@@ -28,7 +27,7 @@ const localImages = {
 };
 
 const CardPizza = ({ pizza }) => {
-  const { addToCart } = useCart(); // <-- Hook del contexto
+  const { addToCart } = useCart();
 
   const { id, name, price, ingredients, img } = pizza;
   const pizzaImage = localImages[id] || localImages[name?.toLowerCase()] || img || imgNapolitana;
@@ -62,10 +61,12 @@ const CardPizza = ({ pizza }) => {
             Precio: ${formatTotal(price)}
           </h4>
           <div className="d-flex justify-content-around">
-            <button className="btn btn-outline-dark btn-sm">Ver Más 👀</button>
+            <Link to={`/pizza/${id}`} className="btn btn-outline-dark btn-sm">
+              Ver Más 👀
+            </Link>
             <button 
               className="btn btn-dark btn-sm"
-              onClick={() => addToCart(pizza)} // <-- Dispara la acción de añadir
+              onClick={() => addToCart(pizza)}
             >
               Añadir 🛒
             </button>

@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useUser } from '../context/UserContext';
 import { formatTotal } from '../utils/formatUtils';
 
 const Navbar = () => {
-  const { total } = useCart(); // <-- Consumimos el total global
+  const { total } = useCart();
+  const { token, logout } = useUser();
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
@@ -12,8 +14,18 @@ const Navbar = () => {
       <div className="d-flex justify-content-between w-100 align-items-center ms-3">
         <div className="d-flex gap-2">
           <Link to="/" className="btn btn-outline-light btn-sm">🍕 Home</Link>
-          <Link to="/login" className="btn btn-outline-light btn-sm">🔐 Login</Link>
-          <Link to="/register" className="btn btn-outline-light btn-sm">🔐 Register</Link>
+          
+          {token ? (
+            <>
+              <Link to="/profile" className="btn btn-outline-light btn-sm">🔓 Profile</Link>
+              <button className="btn btn-outline-light btn-sm" onClick={logout}>🔒 Logout</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="btn btn-outline-light btn-sm">🔐 Login</Link>
+              <Link to="/register" className="btn btn-outline-light btn-sm">🔐 Register</Link>
+            </>
+          )}
         </div>
 
         <Link to="/cart" className="btn btn-outline-info btn-sm">
