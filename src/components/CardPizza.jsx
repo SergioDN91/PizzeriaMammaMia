@@ -1,34 +1,77 @@
+import { useCart } from '../context/CartContext';
 import { formatTotal } from '../utils/formatUtils';
 
-const CardPizza = ({ name, price, ingredients, img }) => {
+// Importa tus imágenes locales
+import imgNapolitana from '../assets/img/napolitana.jpg';
+import imgEspanola from '../assets/img/española.jpg';
+import imgPepperoni from '../assets/img/pepperoni.jpg';
+import imgCuatroEstaciones from '../assets/img/cuatroestaciones.jpg';
+import imgBacon from '../assets/img/bacon.jpg';
+import imgPolloBbq from '../assets/img/pollobbq.jpg';
+
+const localImages = {
+  p001: imgNapolitana,
+  p002: imgEspanola,
+  p003: imgPepperoni,
+  p004: imgCuatroEstaciones,
+  p005: imgBacon,
+  p006: imgPolloBbq,
+  napolitana: imgNapolitana,
+  española: imgEspanola,
+  espanola: imgEspanola,
+  salame: imgPepperoni,
+  pepperoni: imgPepperoni,
+  "cuatro estaciones": imgCuatroEstaciones,
+  bacon: imgBacon,
+  "pollo picante": imgPolloBbq,
+  "pollo bbq": imgPolloBbq,
+};
+
+const CardPizza = ({ pizza }) => {
+  const { addToCart } = useCart(); // <-- Hook del contexto
+
+  const { id, name, price, ingredients, img } = pizza;
+  const pizzaImage = localImages[id] || localImages[name?.toLowerCase()] || img || imgNapolitana;
+  const displayName = name?.toLowerCase() === 'pollo picante' ? 'pollo bbq' : name;
+
   return (
-    <div className="card h-100 mx-auto d-flex flex-column" style={{ width: "18rem" }}>
-        
+    <div className="card h-100 shadow-sm">
       <img 
-        src={img} 
+        src={pizzaImage} 
         className="card-img-top" 
-        alt={`Pizza ${name}`} 
-        style={{ height: "200px", objectFit: "cover" }} 
+        alt={displayName}
+        style={{ height: '200px', objectFit: 'cover' }}
       />
-      
-      <div className="card-body text-center flex-grow-0">
-        <h5 className="card-title fw-light fs-4 mb-0">Pizza {name}</h5>
-      </div>
-      
-      <ul className="list-group list-group-flush text-center d-flex flex-column flex-grow-1">
-        <li className="list-group-item d-flex flex-column justify-content-center flex-grow-1 py-3">
-          <p className="mb-1 text-muted fs-6">Ingredientes:</p>
-          <p className="mb-0 fs-6 text-secondary">🍕 {ingredients.join(", ")}</p>
-        </li>
+      <div className="card-body d-flex flex-column justify-content-between">
+        <div>
+          <h5 className="card-title text-capitalize fw-bold mb-3 text-center">
+            Pizza {displayName}
+          </h5>
+          <hr />
+          <p className="card-text text-center text-secondary mb-2">Ingredientes:</p>
+          <ul className="list-unstyled text-center mb-3">
+            {ingredients?.map((ingredient, index) => (
+              <li key={index} className="text-capitalize">🍕 {ingredient}</li>
+            ))}
+          </ul>
+        </div>
         
-        <li className="list-group-item pb-3 mt-auto">
-          <h4 className="fw-bold text-dark my-3">Precio: ${formatTotal(price)}</h4>
-          <div className="d-flex justify-content-between">
-            <button className="btn btn-light border text-dark">Ver Más 👀</button>
-            <button className="btn btn-dark">Añadir 🛒</button>
+        <div>
+          <hr />
+          <h4 className="card-text text-center fw-bold mb-3">
+            Precio: ${formatTotal(price)}
+          </h4>
+          <div className="d-flex justify-content-around">
+            <button className="btn btn-outline-dark btn-sm">Ver Más 👀</button>
+            <button 
+              className="btn btn-dark btn-sm"
+              onClick={() => addToCart(pizza)} // <-- Dispara la acción de añadir
+            >
+              Añadir 🛒
+            </button>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   );
 };

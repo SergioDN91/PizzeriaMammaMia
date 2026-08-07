@@ -1,45 +1,24 @@
+import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import { formatTotal } from '../utils/formatUtils';
 
 const Navbar = () => {
-  const total = 25000;
-  const token = false;
+  const { total } = useCart(); // <-- Consumimos el total global
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark text-white bg-dark">
-      <div className="container">
-        <a className="navbar-brand" href="#">Pizzería Mamma Mia!</a>
-        
-        <div className="collapse navbar-collapse d-flex justify-content-between">
-          <ul className="navbar-nav mb-2 mb-lg-0 d-flex gap-2">
-            <li className="nav-item">
-              <button className="btn btn-outline-light">🍕 Home</button>
-            </li>
-            
-            {token ? (
-              <>
-                <li className="nav-item">
-                  <button className="btn btn-outline-light">🔓 Profile</button>
-                </li>
-                <li className="nav-item">
-                  <button className="btn btn-outline-light">🔒 Logout</button>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="nav-item">
-                  <button className="btn btn-outline-light">🔐 Login</button>
-                </li>
-                <li className="nav-item">
-                  <button className="btn btn-outline-light">🔐 Register</button>
-                </li>
-              </>
-            )}
-          </ul>
-          
-          <button className="btn btn-outline-info">
-            🛒 Total: ${formatTotal(total)}
-          </button>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+      <Link className="navbar-brand fw-bold" to="/">Pizzería Mamma Mia!</Link>
+      
+      <div className="d-flex justify-content-between w-100 align-items-center ms-3">
+        <div className="d-flex gap-2">
+          <Link to="/" className="btn btn-outline-light btn-sm">🍕 Home</Link>
+          <Link to="/login" className="btn btn-outline-light btn-sm">🔐 Login</Link>
+          <Link to="/register" className="btn btn-outline-light btn-sm">🔐 Register</Link>
         </div>
+
+        <Link to="/cart" className="btn btn-outline-info btn-sm">
+          🛒 Total: ${formatTotal(total)}
+        </Link>
       </div>
     </nav>
   );
