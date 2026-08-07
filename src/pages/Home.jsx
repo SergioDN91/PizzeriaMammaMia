@@ -26,13 +26,8 @@ const Home = () => {
         <div className="row g-4 justify-content-center">
           {pizzas.map((pizza) => (
             <div className="col-12 col-md-4" key={pizza.id}>
-              <CardPizza
-                id={pizza.id} 
-                name={pizza.name}
-                price={pizza.price}
-                ingredients={pizza.ingredients}
-                img={pizza.img}
-              />
+              
+              <CardPizza pizza={pizza} />
             </div>
           ))}
         </div>

@@ -1,11 +1,13 @@
+import { useCart } from '../context/CartContext';
 import { formatTotal } from '../utils/formatUtils';
+
+// Importa tus imágenes locales
 import imgNapolitana from '../assets/img/napolitana.jpg';
 import imgEspanola from '../assets/img/española.jpg';
 import imgPepperoni from '../assets/img/pepperoni.jpg';
 import imgCuatroEstaciones from '../assets/img/cuatroestaciones.jpg';
 import imgBacon from '../assets/img/bacon.jpg';
-import imgPolloBBQ from '../assets/img/pollobbq.jpg';
-
+import imgPolloBbq from '../assets/img/pollobbq.jpg';
 
 const localImages = {
   p001: imgNapolitana,
@@ -13,8 +15,7 @@ const localImages = {
   p003: imgPepperoni,
   p004: imgCuatroEstaciones,
   p005: imgBacon,
-  p006: imgPolloBBQ,
-
+  p006: imgPolloBbq,
   napolitana: imgNapolitana,
   española: imgEspanola,
   espanola: imgEspanola,
@@ -22,15 +23,15 @@ const localImages = {
   pepperoni: imgPepperoni,
   "cuatro estaciones": imgCuatroEstaciones,
   bacon: imgBacon,
-  "pollo picante": imgPolloBBQ,
-  "pollo bbq": imgPolloBBQ,
+  "pollo picante": imgPolloBbq,
+  "pollo bbq": imgPolloBbq,
 };
 
-const CardPizza = ({ id, name, price, ingredients, img }) => {
- 
-  const pizzaImage = localImages[id] || localImages[name?.toLowerCase()] || img || imgNapolitana;
+const CardPizza = ({ pizza }) => {
+  const { addToCart } = useCart(); // <-- Hook del contexto
 
-  
+  const { id, name, price, ingredients, img } = pizza;
+  const pizzaImage = localImages[id] || localImages[name?.toLowerCase()] || img || imgNapolitana;
   const displayName = name?.toLowerCase() === 'pollo picante' ? 'pollo bbq' : name;
 
   return (
@@ -62,7 +63,12 @@ const CardPizza = ({ id, name, price, ingredients, img }) => {
           </h4>
           <div className="d-flex justify-content-around">
             <button className="btn btn-outline-dark btn-sm">Ver Más 👀</button>
-            <button className="btn btn-dark btn-sm">Añadir 🛒</button>
+            <button 
+              className="btn btn-dark btn-sm"
+              onClick={() => addToCart(pizza)} // <-- Dispara la acción de añadir
+            >
+              Añadir 🛒
+            </button>
           </div>
         </div>
       </div>
