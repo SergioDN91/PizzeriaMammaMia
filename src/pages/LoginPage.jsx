@@ -1,55 +1,59 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  
+  const { login } = useUser();
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!email.trim() || !password.trim()) {
-      alert('Authentication failed: All fields are required!');
+    setErrorMsg('');
+    
+    if (!email || !password) {
+      setErrorMsg('Todos los campos son obligatorios');
       return;
     }
 
-    if (password.length < 6) {
-      alert('Authentication failed: Password must be at least 6 characters!');
-      return;
+    const res = await login(email, password);
+    if (res.success) {
+      navigate('/'); 
+    } else {
+      setErrorMsg(res.message);
     }
-
-    alert('Authentication successful!');
-    setEmail('');
-    setPassword('');
   };
 
   return (
-    <div className="container d-flex flex-column align-items-center justify-content-center my-5 flex-grow-1">
-      <form onSubmit={handleLogin} className="w-100 p-4 border rounded shadow-sm bg-white" style={{ maxWidth: '500px' }}>
-        <h2 className="fs-1 fw-bold mb-4 text-center">Login</h2>
+    <div className="container my-5 d-flex justify-content-center">
+      <form onSubmit={handleSubmit} className="p-4 border rounded shadow" style={{ maxWidth: '400px', width: '100%' }}>
+        <h2 className="mb-4 text-center fw-bold">Login</h2>
+        {errorMsg && <div className="alert alert-danger">{errorMsg}</div>}
         
         <div className="mb-3">
-          <label className="form-label fs-5 text-muted">Email</label>
-          <input
-            type="email"
-            className="form-control form-control-lg"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+          <label className="form-label">Email</label>
+          <input 
+            type="email" 
+            className="form-control" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+          />
+        </div>
+        
+        <div className="mb-3">
+          <label className="form-label">Contraseña</label>
+          <input 
+            type="password" 
+            className="form-control" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
           />
         </div>
 
-        <div className="mb-4">
-          <label className="form-label fs-5 text-muted">Password</label>
-          <input
-            type="password"
-            className="form-control form-control-lg"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-
-        <button type="submit" className="btn btn-primary btn-lg w-100">Login</button>
+        <button type="submit" className="btn btn-primary w-100">Iniciar Sesión</button>
       </form>
     </div>
   );
